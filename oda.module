@@ -5,17 +5,18 @@
  * Module containing custom oda code.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_alter().
  */
-function oit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Still need to add hook for page node and oda page type.
-  foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
-    if ($value == '<ODA Main Menu>') {
-      break;
-    } else {
-      unset($form['menu']['link']['menu_parent']['#options'][$key]);
-    }
-  }
+//  foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
+//    if ($value == '<ODA Main Menu>') {
+//      break;
+//    } else {
+//      unset($form['menu']['link']['menu_parent']['#options'][$key]);
+//    }
+//  }
 }
