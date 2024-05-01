@@ -1,0 +1,7 @@
+name: 'ODA'
+type: module
+description: 'Customizations for Data & Analytics domain of site.'
+dependencies:
+  - drupal:block
+
+core_version_requirement: ^10

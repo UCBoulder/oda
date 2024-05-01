@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Module containing custom oda code.
+ */
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function oit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Still need to add hook for page node and oda page type.
+  foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
+    if ($value == '<ODA Main Menu>') {
+      break;
+    } else {
+      unset($form['menu']['link']['menu_parent']['#options'][$key]);
+    }
+  }
+}

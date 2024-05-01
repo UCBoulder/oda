@@ -1,0 +1,9 @@
+{
+  "name": "oit/oda",
+  "type": "drupal-custom-module",
+  "description": "Customizations for Data & Analytics domain of site.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/UCBoulder/oda",
+  "minimum-stability": "dev"
+}
