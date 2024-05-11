@@ -1,0 +1,4 @@
+/* Hide the Domain Access fieldset on the content view for ODA */
+.form-item--field-domain-access-target-id {
+  display: none;
+}

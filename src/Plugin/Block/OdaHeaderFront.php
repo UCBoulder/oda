@@ -8,23 +8,22 @@ use Drupal\Core\Block\BlockBase;
  * Top pages block.
  *
  * @Block(
- *   id = "oda_header",
- *   admin_label = @Translation("ODA header link")
+ *   id = "oda_header_front",
+ *   admin_label = @Translation("ODA header front")
  * )
  */
-class OdaHeader extends BlockBase {
+class OdaHeaderFront extends BlockBase {
 
   /**
    * {@inheritdoc}
    */
   public function build() {
-    // Check if front page.
     $block['string'] = [
       '#type' => 'inline_template',
       '#template' => '<div class="site-name-wrapper">
-      <div class="site-name">
+      <h1 class="site-name">
         <a href="/" title="Home" class="header__site-link" rel="home"><span>{{ title }}</span></a>
-      </div>
+      </h1>
       <div class="affiliation">
         <a href="https://oit.colorado.edu/">{{ subtitle }}</a></div>
       </div>',
