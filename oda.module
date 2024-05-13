@@ -12,6 +12,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Implements hook_form_alter().
  */
 function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == "views_exposed_form" && $form['#id'] == "views-exposed-form-media-media-page-list") {
+    $domain = \Drupal::service('oit.domain')->getDomain();
+    if ($domain == 'oda') {
+      $options = [];
+      foreach ($form['type']['#options'] as $key => $value) {
+        if ($key == 'oda_files' || $key == 'oda_images') {
+          $options[$key] = $value;
+        }
+      }
+      $form['type']['#options'] = $options;
+    }
+  }
   // Add custom library to admin content page and set domain.
   if ($form_id == "views_form_content_page_1") {
     $domain = \Drupal::service('oit.domain')->getDomain();
@@ -37,6 +49,24 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   // Set defaults on page nodes for ODA type.
   if ($form_id == "node_page_form" || $form_id == "node_page_edit_form") {
+    $domain = \Drupal::service('oit.domain')->getDomain();
+    if ($domain == 'oda') {
+      // Get query string.
+      $query = \Drupal::request()->query->all();
+      $oda_set = FALSE;
+      foreach ($query as $key => $value) {
+        if ($value == 'oda') {
+          $oda_set = TRUE;
+        }
+      }
+      if (!$oda_set) {
+        // Redirect to query string "field_domain_access_target_id=oit_colorado_edu".
+        $query['type'] = 'oda';
+        $query = http_build_query($query);
+        $response = new RedirectResponse('/node/add/page?' . $query);
+        $response->send();
+      }
+    }
     $request = \Drupal::request();
     $request_type = $request->get("type");
     if (isset($request_type)) {
@@ -49,6 +79,12 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
           }
         }
         $form['menu']['link']['menu_parent']['#options'] = $menu;
+        $form['field_service_main_page']['#access'] = FALSE;
+        $form['taxonomy_vocabulary_11']['#access'] = FALSE;
+        $form['field_services_related']['#access'] = FALSE;
+        $form['field_tut_comp_type_d7']['#access'] = FALSE;
+        $form['field_software_download_link']['#access'] = FALSE;
+        $form['type_service']['#access'] = FALSE;
       }
     }
   }
