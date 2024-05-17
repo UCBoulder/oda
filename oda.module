@@ -50,7 +50,7 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Set defaults on page nodes for ODA type.
   if ($form_id == "node_page_form" || $form_id == "node_page_edit_form") {
     $domain = \Drupal::service('oit.domain')->getDomain();
-    if ($domain == 'oda') {
+    if ($domain == 'oda' && $form_id == "node_page_form") {
       // Get query string.
       $query = \Drupal::request()->query->all();
       $oda_set = FALSE;
@@ -66,36 +66,28 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
         $response = new RedirectResponse('/node/add/page?' . $query);
         $response->send();
       }
+      $form['field_oit_category']['widget']['#default_value'][] = 1081;
     }
     $request = \Drupal::request();
     $request_type = $request->get("type");
-    if (isset($request_type)) {
-      if ($request_type == "oda") {
-        $menu = [];
-        foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
-          // If key starts with "oda-main-menu".
-          if (strpos($key, 'oda-main-menu') !== FALSE) {
-            $menu[$key] = $value;
-          }
+    $request_type = isset($request_type) ? $request_type : 0;
+    // Only show ODA menu items.
+    if ($request_type == "oda" || in_array(1081, $form['field_oit_category']['widget']['#default_value'])) {
+      $menu = [];
+      foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
+        // If key starts with "oda-main-menu".
+        if (strpos($key, 'oda-main-menu') !== FALSE) {
+          $menu[$key] = $value;
         }
-        $form['menu']['link']['menu_parent']['#options'] = $menu;
-        $form['field_service_main_page']['#access'] = FALSE;
-        $form['taxonomy_vocabulary_11']['#access'] = FALSE;
-        $form['field_services_related']['#access'] = FALSE;
-        $form['field_tut_comp_type_d7']['#access'] = FALSE;
-        $form['field_software_download_link']['#access'] = FALSE;
-        $form['type_service']['#access'] = FALSE;
       }
+      $form['menu']['link']['menu_parent']['#options'] = $menu;
+      $form['field_service_main_page']['#access'] = FALSE;
+      $form['taxonomy_vocabulary_11']['#access'] = FALSE;
+      $form['field_services_related']['#access'] = FALSE;
+      $form['field_tut_comp_type_d7']['#access'] = FALSE;
+      $form['field_software_download_link']['#access'] = FALSE;
+      $form['type_service']['#access'] = FALSE;
     }
   }
-
-
-  // Still need to add hook for page node and oda page type.
-//  foreach ($form['menu']['link']['menu_parent']['#options'] as $key => $value) {
-//    if ($value == '<ODA Main Menu>') {
-//      break;
-//    } else {
-//      unset($form['menu']['link']['menu_parent']['#options'][$key]);
-//    }
-//  }
 }
+
