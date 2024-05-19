@@ -81,12 +81,24 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
         }
       }
       $form['menu']['link']['menu_parent']['#options'] = $menu;
-      $form['field_service_main_page']['#access'] = FALSE;
-      $form['taxonomy_vocabulary_11']['#access'] = FALSE;
-      $form['field_services_related']['#access'] = FALSE;
-      $form['field_tut_comp_type_d7']['#access'] = FALSE;
-      $form['field_software_download_link']['#access'] = FALSE;
-      $form['type_service']['#access'] = FALSE;
+
+      if ($domain == 'oda') {
+        $form['field_service_main_page']['#access'] = FALSE;
+        $form['taxonomy_vocabulary_11']['#access'] = FALSE;
+        $form['field_services_related']['#access'] = FALSE;
+        $form['field_tut_comp_type_d7']['#access'] = FALSE;
+        $form['field_software_download_link']['#access'] = FALSE;
+        $form['type_service']['#access'] = FALSE;
+        $form['field_oit_category']['#access'] = FALSE;
+      }
+    }
+    if ($request_type != "oda" && $domain == 'oda') {
+      // User message, 'You are not allowed to edit this page, try creating a new one'.
+      \Drupal::messenger()->addMessage(t('You are not allowed to edit this page, try creating a new one.'), 'error');
+      $query['type'] = 'oda';
+      $query = http_build_query($query);
+      $response = new RedirectResponse('/node/add/page?' . $query);
+      $response->send();
     }
   }
 }
