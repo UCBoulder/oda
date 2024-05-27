@@ -112,3 +112,16 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   }
 }
 
+/**
+ * Implements hook_shortcut_default_set().
+ */
+function oda_shortcut_default_set() {
+  $current_user = \Drupal::currentUser();
+  $roles = $current_user->getRoles();
+
+  // if roles array contains 'oda_editors' or 'oda_super_editors'.
+  if (in_array('oda_editors', $roles) || in_array('oda_super_editors', $roles)) {
+      return 'oda';
+  }
+}
+
