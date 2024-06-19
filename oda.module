@@ -62,6 +62,31 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   }
 
   // Set defaults on page nodes for ODA type.
+  if ($form_id == "node_data_report_form" || $form_id == "node_data_report_edit_form") {
+    $form['#attached']['library'][] = 'webform/webform.element.select2';
+    $form['#attached']['library'][] = 'oda/oit_data_report_page_form';
+    // Group for page sub-type extra fields.
+    $form['oda_terms'] = [
+      '#title' => t('Terms'),
+      '#type' => 'details',
+      '#group' => 'advanced',
+      '#open' => 1,
+      '#weight' => 100,
+    ];
+    $form['field_oda_population']['#group'] = 'oda_terms';
+    $form['field_level_of_detail']['#group'] = 'oda_terms';
+    $form['field_oda_cu_stats']['#group'] = 'oda_terms';
+    $form['field_oda_course_data']['#group'] = 'oda_terms';
+    $form['field_oda_term']['#group'] = 'oda_terms';
+    $form['field_oda_type']['#group'] = 'oda_terms';
+    $form['field_oda_academic_terms_covered']['#group'] = 'oda_terms';
+    $form['field_demographics']['#group'] = 'oda_terms';
+    $form['field_oda_peers_ext_org']['#group'] = 'oda_terms';
+    $form['field_oda_financial']['#group'] = 'oda_terms';
+    $form['field_oda_survey_data']['#group'] = 'oda_terms';
+  }
+
+  // Set defaults on page nodes for ODA type.
   if ($form_id == "node_page_form" || $form_id == "node_page_edit_form") {
     $domain = \Drupal::service('oit.domain')->getDomain();
     if ($domain == 'oda' && $form_id == "node_page_form") {
