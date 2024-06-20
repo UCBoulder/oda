@@ -153,8 +153,11 @@ function oda_shortcut_default_set() {
   $roles = $current_user->getRoles();
 
   // if roles array contains 'oda_editors' or 'oda_super_editors'.
-  if (in_array('oda_editors', $roles) || in_array('oda_super_editors', $roles)) {
+  if (in_array('oda_editors', $roles)) {
       return 'oda';
+  }
+  if (in_array('oda_super_editors', $roles)) {
+      return 'oda-super-editor';
   }
 }
 
