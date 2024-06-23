@@ -7,6 +7,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
 
 /**
  * Implements hook_form_alter().
@@ -74,16 +76,40 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
       '#weight' => 100,
     ];
     $form['field_oda_population']['#group'] = 'oda_terms';
-    $form['field_level_of_detail']['#group'] = 'oda_terms';
+    $form['field_oda_level_of_detail']['#group'] = 'oda_terms';
     $form['field_oda_cu_stats']['#group'] = 'oda_terms';
     $form['field_oda_course_data']['#group'] = 'oda_terms';
     $form['field_oda_term']['#group'] = 'oda_terms';
     $form['field_oda_type']['#group'] = 'oda_terms';
     $form['field_oda_academic_terms_covered']['#group'] = 'oda_terms';
-    $form['field_demographics']['#group'] = 'oda_terms';
+    $form['field_oda_demographics']['#group'] = 'oda_terms';
     $form['field_oda_peers_ext_org']['#group'] = 'oda_terms';
     $form['field_oda_financial']['#group'] = 'oda_terms';
     $form['field_oda_survey_data']['#group'] = 'oda_terms';
+
+
+    // if current user is 'oda_super_editors' or 'administrator'.
+    $current_user = \Drupal::currentUser();
+    $roles = $current_user->getRoles();
+    if (in_array('oda_super_editors', $roles) || in_array('administrator', $roles)) {
+      // Add 'Add/Delete Terms' button to taxonomy fields.
+      $term_list = [
+        'oda_population',
+        'oda_level_of_detail',
+        'oda_cu_stats',
+        'oda_course_data',
+        'oda_term',
+        'oda_type',
+        'oda_academic_terms_covered',
+        'oda_demographics',
+        'oda_peers_ext_org',
+      ];
+      foreach ($term_list as $term) {
+        $link = oda_term_edit($term);
+        $form_term = 'field_' . $term;
+        $form[$form_term]['widget']['#suffix'] = $link;
+      }
+    }
   }
 
   // Set defaults on page nodes for ODA type.
@@ -143,6 +169,16 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
       $response->send();
     }
   }
+}
+
+/**
+ * Create term edit links.
+ */
+function oda_term_edit($term_id, $edit_label = 'Add/Delete Terms') {
+  $url = Url::fromUri("internal:/admin/structure/taxonomy/manage/$term_id/overview");
+  $link = Link::fromTextAndUrl(t($edit_label), $url);
+
+  return $link->toString()->getGeneratedLink();
 }
 
 /**
