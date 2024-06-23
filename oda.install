@@ -1,0 +1,162 @@
+<?php
+
+/**
+* @file
+*/
+
+/**
+ * Setup some inital terms.
+ */
+function oda_update_10001() {
+  $pop_terms = [
+    "undergraduates",
+    "graduate students",
+    "faculty",
+    "staff",
+    "alumni",
+    "transfers",
+    "IUT intra-university transfer",
+  ];
+  foreach ($pop_terms as $pop_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_population',
+      'name' => $pop_term,
+    ]);
+    $term->save();
+  }
+  $level_of_detail_terms = [
+    "campus/institute",
+    "school/college",
+    "department",
+    "program/major",
+    "individuals",
+  ];
+  foreach ($level_of_detail_terms as $lod_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_level_of_detail',
+      'name' => $lod_term,
+    ]);
+    $term->save();
+  }
+  $cu_stats_terms = [
+    "academic performance (gpa, DFW)",
+    "academic planning",
+    "admissions",
+    "campus life",
+    "degrees",
+    "financial aid",
+    "FCQ",
+    "headcount",
+    "grants",
+    "enrollment",
+    "retention",
+    "graduation rates",
+    "time to degree",
+    "post-graduation",
+    "salaries",
+    "SCH",
+    "surveys",
+    "other",
+  ];
+  foreach ($cu_stats_terms as $cu_stats_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_cu_stats',
+      'name' => $cu_stats_term,
+    ]);
+    $term->save();
+  }
+  $course_data_terms = [
+    "pathways",
+    "profile",
+    "FCQ",
+    "GPA",
+    "DFW (Drop/Fail/Withdraw)",
+    "ICLM (Instructor Course Load Matrix)",
+    "academic planning",
+  ];
+  foreach ($course_data_terms as $course_data_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_course_data',
+      'name' => $course_data_term,
+    ]);
+    $term->save();
+  }
+  $term_terms = [
+    "fall",
+    "spring",
+    "summer",
+  ];
+  foreach ($term_terms as $term_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_term',
+      'name' => $term_term,
+    ]);
+    $term->save();
+  }
+  $type_terms = [
+    "pdf",
+    "excel",
+    "doc",
+    "tableau",
+    "web",
+  ];
+  foreach ($type_terms as $type_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_type',
+      'name' => $type_term,
+    ]);
+    $term->save();
+  }
+  $academic_terms_covered_terms = [
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+  ];
+  foreach ($academic_terms_covered_terms as $academic_terms_covered_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_academic_terms_covered',
+      'name' => $academic_terms_covered_term,
+    ]);
+    $term->save();
+  }
+  $demographics_terms = [
+    "residency",
+    "race/ethnicity",
+    "first gen",
+    "veteran",
+    "location",
+    "disability",
+    "entry-type",
+    "gender",
+    "international",
+  ];
+  foreach ($demographics_terms as $demographics_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_demographics',
+      'name' => $demographics_term,
+    ]);
+    $term->save();
+  }
+  $peers_ext_org_terms = [
+    "CDS",
+    "IPEDS",
+    "AAU",
+    "AAUDE",
+    "GradSERU",
+    "NCAA",
+    "ARPAC",
+    "CU Regents",
+    "Peer Comparison",
+  ];
+  foreach ($peers_ext_org_terms as $peers_ext_org_term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'vid' => 'oda_peers_ext_org',
+      'name' => $peers_ext_org_term,
+    ]);
+    $term->save();
+  }
+}
+
+
