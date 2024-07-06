@@ -4,6 +4,8 @@
 * @file
 */
 
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+
 /**
  * Setup some inital terms.
  */
@@ -159,4 +161,33 @@ function oda_update_10001() {
   }
 }
 
+/**
+ * Create new data pages.
+ */
+function oda_update_10003() {
+  $titles = [
+    'Welcome to data and analytics',
+    'About',
+    'Data and Reports',
+    'Request Info',
+    'What we do',
+  ];
+  foreach ($titles as $title) {
+    $data_page = \Drupal::entityTypeManager()->getStorage('node')->create([
+      'type' => 'oda_page',
+      'title' => $title,
+      'langcode' => 'en',
+      'body' => [
+        'value' => '',
+        'format' => 'oda_rich_text',
+      ],
+      'field_domain_access' => [
+        0 => 'oda_colorado_edu'
+      ],
+      'uid' => '26',
+      'status' => '1',
+    ]);
+    $data_page->save();
+  }
+}
 
