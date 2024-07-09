@@ -9,3 +9,6 @@ node_page:
 oit_data_report_page_form:
   js:
     js/oda_node_data_report_form.js: {}
+data_report_layout:
+  js:
+    js/data_report_layout.js: {}

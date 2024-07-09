@@ -8,7 +8,17 @@
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
 use Drupal\Core\Link;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function oda_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'oda_data') {
+    $view->element['#attached']['library'][] = 'oda/data_report_layout';
+  }
+}
 
 /**
  * Implements hook_form_alter().
