@@ -55,7 +55,7 @@
   }
 
   if ( $(".close-filter").length == 0 ) {
-    $(".views-exposed-form").prepend('<button class="close-filter">Close</button>');
+    $(".views-exposed-form").prepend('<button class="close-filter" aria-label="close">X</button>');
   }
 
   function toggleSidebar() {
