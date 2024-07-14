@@ -1,4 +1,4 @@
-(function($, Drupal, cookies) {
+(function ($, Drupal, cookies) {
 
   "use strict";
 
@@ -6,7 +6,7 @@
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
+    for(let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
@@ -39,7 +39,6 @@
     }
   }
 
-
   function reportOneColumn() {
     $(".views-element-container .row-wrapper").removeClass("two-column");
     $('.views-element-container .row-wrapper').addClass('one-column');
@@ -61,7 +60,7 @@
   function toggleSidebar() {
     $("aside").toggleClass("open");
     // wait 200ms before focusing on the input
-    setTimeout(function(){
+    setTimeout(function () {
       if ( $("aside").is(":visible") ) {
         $("input[name='search_api_fulltext']").focus();
       }
@@ -94,6 +93,5 @@
 
     }
   };
-
 
 })(jQuery, Drupal, window.Cookies);
