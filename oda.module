@@ -73,7 +73,12 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     }
   }
 
-  // Set defaults on page nodes for ODA type.
+  // Set defaults on data report nodes.
+  if ($form_id == "node_oda_page_form") {
+    $form['body']['widget'][0]['#default_value'] = '<p>ODA Data Report Info</p><p><strong>Tags:</strong> tag, tag, tag</p>';
+  }
+
+  // Set defaults on data report nodes for ODA type.
   if ($form_id == "node_data_report_form" || $form_id == "node_data_report_edit_form") {
     $form['#attached']['library'][] = 'webform/webform.element.select2';
     $form['#attached']['library'][] = 'oda/oit_data_report_page_form';
