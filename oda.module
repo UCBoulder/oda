@@ -73,8 +73,8 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     }
   }
 
-  // Set defaults on data report nodes.
-  if ($form_id == "node_oda_page_form") {
+  // Set defaults on new data report nodes.
+  if ($form_id == "node_data_report_form") {
     $form['body']['widget'][0]['#default_value'] = '<p>ODA Data Report Info</p><p><strong>Tags:</strong> tag, tag, tag</p>';
   }
 
