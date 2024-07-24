@@ -24,8 +24,14 @@ function oda_views_pre_render(ViewExecutable $view) {
  * Implements hook_form_alter().
  */
 function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $domain = \Drupal::service('oit.domain')->getDomain();
+  if ($domain == 'oda') {
+    if (isset($form['field_domain_source'])) {
+      $form['field_domain_source']['widget']['#default_value'][] = 'oda_colorado_edu';
+    }
+  }
+
   if ($form_id == "views_exposed_form" && $form['#id'] == "views-exposed-form-media-media-page-list") {
-    $domain = \Drupal::service('oit.domain')->getDomain();
     if ($domain == 'oda') {
       $options = [];
       foreach ($form['type']['#options'] as $key => $value) {
