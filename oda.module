@@ -26,6 +26,9 @@ function oda_views_pre_render(ViewExecutable $view) {
 function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $domain = \Drupal::service('oit.domain')->getDomain();
   if ($domain == 'oda') {
+    if (isset($form['field_domain_access'])) {
+      $form['field_domain_access']['widget']['#default_value'][] = 'oda_colorado_edu';
+    }
     if (isset($form['field_domain_source'])) {
       $form['field_domain_source']['widget']['#default_value'][] = 'oda_colorado_edu';
     }
