@@ -135,6 +135,41 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
       }
     }
   }
+
+  // Set defaults on data page nodes for ODA type.
+  if ($form_id == "node_oda_page_form" || $form_id == "node_oda_page_edit_form") {
+    $advanced = [
+      '#type' => 'inline_template',
+      '#template' => '<details>
+      <summary>{{ details_title }}</summary>
+      <ul>
+        <li>
+          <a href="{{ svg_link }}" class="edit-button use-ajax" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">
+            {{ svg_title }}
+          </a>
+        </li>
+      </ul>
+      </details>',
+      '#context' => [
+        'details_title' => t('advanced html'),
+        'svg_link' => '/admin/config/content/shortcode_svg/svg_list',
+        'svg_title' => t('Icons shortcode panel'),
+      ],
+      '#weight' => 13,
+      '#allowed_tags' => [
+        'button',
+        'details',
+        'summary',
+        'ul',
+        'li',
+        'a',
+        'p',
+        'h3',
+      ],
+    ];
+    $form['oit_advanced'] = $advanced;
+  }
+
 }
 
 /**
