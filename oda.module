@@ -12,6 +12,19 @@ use Drupal\views\ViewExecutable;
 use Drupal\Core\Link;
 
 /**
+ * Implements hook_page_attachments() to add library oda.node_page to
+ * data_report node type..
+ */
+function oda_page_attachments(array &$attachments) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    if ($node->getType() == 'data_report') {
+      $attachments['#attached']['library'][] = 'oda/node_page';
+    }
+  }
+}
+
+/**
  * Implements hook_views_pre_render().
  */
 function oda_views_pre_render(ViewExecutable $view) {

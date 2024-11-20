@@ -3,6 +3,8 @@ admin_content:
     theme:
       css/admin-content.css: {}
 node_page:
+  js:
+    js/data_report_node.js: {}
   css:
     theme:
       css/node-page.css: {}
