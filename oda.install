@@ -5,6 +5,7 @@
 */
 
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Setup some inital terms.
@@ -191,3 +192,37 @@ function oda_update_10003() {
   }
 }
 
+/**
+ * Add oda permission terms to TAC Control..
+ */
+function oda_update_10004() {
+  $tac_terms = [
+    'OIT-ODA-provost-chancellor',
+    'OIT-ODA-dean',
+    'OIT-ODA-associate-dean',
+    'OIT-ODA-assistant-dean',
+    'OIT-ODA-vc',
+    'OIT-ODA-associate-vc',
+    'OIT-ODA-assistant-vc',
+    'OIT-ODA-chair-director',
+    'OIT-ODA-associate-chair-director',
+    'OIT-ODA-employee',
+    'OIT-ODA-faculty',
+    'OIT-ODA-professional',
+    'OIT-ODA-staff',
+
+  ];
+
+  $weight = 3;
+
+  foreach ($tac_terms as $tac_term) {
+    $term = Term::create([
+      'name' => $tac_term,
+      'vid' => 'tac_control',
+      'weight' => $weight,
+    ]);
+    $term->save();
+    $weight++;
+  }
+
+}
