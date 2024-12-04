@@ -2,7 +2,6 @@
 
   "use strict";
 
-
   Drupal.behaviors.reportNode = {
     attach: function (context, settings) {
       // Get text of .flag a
@@ -21,17 +20,17 @@
           favorited = 1;
         }
       }
-      $('.flag-oda-reports a').click(function() {
+      $('.flag-oda-reports a').click(function () {
         var now = new Date();
         var time = now.getTime();
-        var expireTime = time + 10*1000;
+        var expireTime = time + 10 * 1000;
         now.setTime(expireTime);
-        document.cookie = name+$(this).attr('href')+';expires='+now.toUTCString()+';path=/';
+        document.cookie = name + $(this).attr('href') + ';expires=' + now.toUTCString() + ';path=/';
       });
       if (favorited == 1) {
         $('.flag a').focus();
         var div = document.getElementById('userupdateinfo');
-        var userAlert = favButtonText == 'Favorite' ? 'This report has been removed from your favorites.': 'This report has been added to your favorites.';
+        var userAlert = favButtonText == 'Favorite' ? 'This report has been removed from your favorites.' : 'This report has been added to your favorites.';
         div.innerHTML = userAlert;
       }
     }
