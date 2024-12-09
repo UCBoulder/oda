@@ -104,6 +104,15 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == "node_data_report_form" || $form_id == "node_data_report_edit_form") {
     $form['#attached']['library'][] = 'webform/webform.element.select2';
     $form['#attached']['library'][] = 'oda/oit_data_report_page_form';
+    // Group for access report TAC.
+    $form['oda_access_group'] = [
+      '#title' => t('Data Report Access Group'),
+      '#type' => 'details',
+      '#group' => 'advanced',
+      '#open' => 1,
+      '#weight' => 99,
+    ];
+    $form['field_oda_report_access']['#group'] = 'oda_access_group';
     // Group for page sub-type extra fields.
     $form['oda_terms'] = [
       '#title' => t('Terms'),
