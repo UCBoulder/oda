@@ -46,7 +46,7 @@ function oda_views_pre_view(ViewExecutable $view) {
     $view_filters = $view->display_handler->getOption('filters');
     $view_filters['field_oda_report_access']['value'] = [];
     foreach ($oda_access_terms as $term_role=>$term_tid) {
-      if (in_array('administrator', $roles) || in_array('pseudo_admin', $roles)) {
+      if (in_array('administrator', $roles) || in_array('pseudo_admin', $roles) || in_array('oda_super_editors', $roles)) {
         $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
       }
       elseif (in_array($term_role, $roles)) {
