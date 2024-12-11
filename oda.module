@@ -27,6 +27,40 @@ function oda_page_attachments(array &$attachments) {
 /**
  * Implements hook_views_pre_render().
  */
+function oda_views_pre_view(ViewExecutable $view) {
+  if ($view->id() == 'oda_data') {
+    // Get current users roles.
+    $current_user = \Drupal::currentUser();
+    $roles = $current_user->getRoles();
+    // Get all taxonomy terms from 'oda_access_control' vocabulary.
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('oda_access_control');
+    // Get the permissions from taxonomy access control terms.
+    $oda_access_terms = [];
+    foreach ($terms as $term) {
+      $tid = $term->tid;
+      $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+      $key = $term->get("field_oda_role_machine_name")->getValue()[0]['value'];
+      $oda_access_terms[$key] = $tid;
+    }
+
+    $view_filters = $view->display_handler->getOption('filters');
+    $view_filters['field_oda_report_access']['value'] = [];
+    foreach ($oda_access_terms as $term_role=>$term_tid) {
+      if (in_array('administrator', $roles) || in_array('pseudo_admin', $roles)) {
+        $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
+      }
+      elseif (in_array($term_role, $roles)) {
+        $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
+      }
+    }
+
+    $view->display_handler->setOption('filters', $view_filters);
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
 function oda_views_pre_render(ViewExecutable $view) {
   if ($view->id() == 'oda_data') {
     $view->element['#attached']['library'][] = 'oda/data_report_layout';

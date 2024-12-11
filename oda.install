@@ -210,7 +210,6 @@ function oda_update_10004() {
     'OIT-ODA-faculty',
     'OIT-ODA-professional',
     'OIT-ODA-staff',
-
   ];
 
   $weight = 3;
@@ -224,5 +223,43 @@ function oda_update_10004() {
     $term->save();
     $weight++;
   }
+}
 
+/**
+ * Add oda permission terms to TAC Control..
+ */
+function oda_update_10005() {
+  $tac_terms = [
+    'DA-DataAndAnalyticsTeam',
+  ];
+
+  $weight = 3;
+
+  foreach ($tac_terms as $tac_term) {
+    $term = Term::create([
+      'name' => $tac_term,
+      'vid' => 'oda_access_control',
+      'weight' => $weight,
+    ]);
+    $term->save();
+
+    $weight++;
+
+    $roles = [
+      'administrator',
+      'pseudo_admin',
+      'oit_oda_da_team',
+    ];
+
+    foreach ($roles as $role) {
+      $query = \Drupal::database();
+      $query->insert('permissions_by_term_role')
+        ->fields([
+          'tid' => $term->id(),
+          'rid' => $role,
+          'langcode' => 'en',
+        ])
+        ->execute();
+    }
+  }
 }
