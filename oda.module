@@ -25,6 +25,23 @@ function oda_page_attachments(array &$attachments) {
 }
 
 /**
+ * Implements hook_page_attachments_alter().
+ */
+function oda_page_attachments_alter(array &$attachments) {
+  $domain = \Drupal::service('oit.domain')->getDomain();
+  if ($domain == 'oda') {
+    $google_site_verify = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'name' => 'google-site-verification',
+        'content' => 'sdDO7pnhCwXnZiU7VRq4lFwoo0TsvpyUUbcYq6s-9A4',
+      ],
+    ];
+    $attachments['#attached']['html_head'][] = [$google_site_verify, 'google-site-verification'];
+  }
+}
+
+/**
  * Implements hook_views_pre_render().
  */
 function oda_views_pre_view(ViewExecutable $view) {
