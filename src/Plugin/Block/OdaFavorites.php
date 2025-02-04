@@ -76,7 +76,7 @@ class OdaFavorites extends BlockBase implements
     $link = '/reports?f%5B0%5D=oda_favorite_data_reports%3A' . $uid;
 
     return [
-      '#markup' => '<a href="' . $link . '">Favorites</a>',
+      '#markup' => '<p><a href="' . $link . '">Favorites</a></p>',
     ];
   }
 
