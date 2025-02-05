@@ -1,0 +1,5 @@
+services:
+  oda.flag_subscriber:
+    class: Drupal\oda\EventSubscriber\FlagSubscriber
+    tags:
+      - { name: event_subscriber }
