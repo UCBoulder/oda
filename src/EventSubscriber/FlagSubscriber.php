@@ -2,14 +2,14 @@
 
 namespace Drupal\oda\EventSubscriber;
 
-use Drupal\Core\Cache\Cache;
+use Drupal\search_api\Entity\Index;
 use Drupal\flag\Event\FlagEvents;
 use Drupal\flag\Event\FlaggingEvent;
 use Drupal\flag\Event\UnflaggingEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- *
+ * Flag event subscriber.
  */
 class FlagSubscriber implements EventSubscriberInterface {
 
@@ -22,9 +22,8 @@ class FlagSubscriber implements EventSubscriberInterface {
   public function onFlag(FlaggingEvent $event) {
     $flagging = $event->getFlagging();
     $flag_id = $flagging->getFlagId();
-    $entity_sid = $flagging->getFlaggable()->id();
     if ($flag_id == 'oda_reports') {
-      $indexes = \Drupal\search_api\Entity\Index::loadMultiple();
+      $indexes = Index::loadMultiple();
       $datasource_id = 'oda_data';
       $indexes[$datasource_id]->reindex();
     }
@@ -40,16 +39,15 @@ class FlagSubscriber implements EventSubscriberInterface {
     $flagging = $event->getFlaggings();
     $flagging = reset($flagging);
     $flag_id = $flagging->getFlagId();
-    $entity_sid = $flagging->getFlaggable()->id();
     if ($flag_id == 'oda_reports') {
-      $indexes = \Drupal\search_api\Entity\Index::loadMultiple();
+      $indexes = Index::loadMultiple();
       $datasource_id = 'oda_data';
       $indexes[$datasource_id]->reindex();
     }
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
     $events = [];
