@@ -182,7 +182,7 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['field_oda_demographics']['#group'] = 'oda_terms';
     $form['field_oda_peers_ext_org']['#group'] = 'oda_terms';
     $form['field_oda_financial']['#group'] = 'oda_terms';
-    $form['field_oda_survey_data']['#group'] = 'oda_terms';
+    $form['field_oda_surveys']['#group'] = 'oda_terms';
 
 
     // if current user is 'oda_super_editors' or 'administrator'.

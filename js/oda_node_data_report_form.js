@@ -9,5 +9,6 @@
     $('#edit-field-oda-academic-terms-covered').select2();
     $('#edit-field-oda-demographics').select2();
     $('#edit-field-oda-peers-ext-org').select2();
+    $('#edit-field-oda-surveys').select2();
   });
 }(jQuery));
