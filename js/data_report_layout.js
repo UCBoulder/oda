@@ -104,4 +104,9 @@
     $('#userupdateinfo').append('<p>Filters Cleared</p>');
   }
 
+  const queryString = window.location.search;
+  if (queryString.includes('f%5B0%5D')) {
+    $('#userupdateinfo').append('<p>Filter applied</p>');
+  }
+
 })(jQuery, Drupal, window.Cookies);
