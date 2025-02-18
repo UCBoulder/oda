@@ -98,4 +98,10 @@
     $('#userupdateinfo').append('<p>No reports found</p>');
   }
 
+  var hash = window.location.hash.substring(1);
+
+  if (hash == "clear-all-filters") {
+    $('#userupdateinfo').append('<p>Filters Cleared</p>');
+  }
+
 })(jQuery, Drupal, window.Cookies);
