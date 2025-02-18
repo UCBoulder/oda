@@ -94,4 +94,8 @@
     }
   };
 
+  if ($('.no-results').length) {
+    $('#userupdateinfo').append('<p>No reports found</p>');
+  }
+
 })(jQuery, Drupal, window.Cookies);
