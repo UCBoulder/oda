@@ -60,25 +60,39 @@ function oda_views_pre_view(ViewExecutable $view) {
     // Get current users roles.
     $current_user = \Drupal::currentUser();
     $roles = $current_user->getRoles();
-    // Get all taxonomy terms from 'oda_access_control' vocabulary.
+
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('oda_access_control');
-    // Get the permissions from taxonomy access control terms.
+
     $oda_access_terms = [];
     foreach ($terms as $term) {
       $tid = $term->tid;
       $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
-      $key = $term->get("field_oda_role_machine_name")->getValue()[0]['value'];
-      $oda_access_terms[$key] = $tid;
+
+      $query = \Drupal::database()->select('permissions_by_term_role', 't');
+      $query->condition('t.tid', $tid);
+      $query->fields('t', ['tid', 'rid']);
+      $results = $query->execute()->fetchAll();
+
+      $oda_access_terms[$tid] = $results;
     }
 
     $view_filters = $view->display_handler->getOption('filters');
     $view_filters['field_oda_report_access']['value'] = [];
-    foreach ($oda_access_terms as $term_role=>$term_tid) {
-      if (in_array('administrator', $roles) || in_array('pseudo_admin', $roles) || in_array('oda_super_editors', $roles)) {
-        $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
-      }
-      elseif (in_array($term_role, $roles)) {
-        $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
+    foreach ($oda_access_terms as $term_role_list) {
+      foreach ($term_role_list as $term_role_part) {
+        $term_role = $term_role_part->rid;
+        $term_tid = $term_role_part->tid;
+
+        // If term role is 'administrator', 'authenticated', 'pseudo_admin', or 'anonymous' then continue.
+        if ($term_role == 'administrator' || $term_role == 'anonymous' || $term_role == 'authenticated' || $term_role == 'pseudo_admin'|| $term_role == 'oda_super_editors') {
+          continue;
+        }
+        if (in_array('administrator', $roles) || in_array('pseudo_admin', $roles) || in_array('oda_super_editors', $roles)) {
+          $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
+        }
+        elseif (in_array($term_role, $roles)) {
+          $view_filters['field_oda_report_access']['value'][$term_tid] = $term_tid;
+        }
       }
     }
 
