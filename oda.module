@@ -96,6 +96,10 @@ function oda_views_pre_view(ViewExecutable $view) {
       }
     }
 
+    if (empty($view_filters['field_oda_report_access']['value'])) {
+      $view_filters['field_oda_report_access']['value'][1228] = 1228;
+    }
+
     $view->display_handler->setOption('filters', $view_filters);
   }
 }
