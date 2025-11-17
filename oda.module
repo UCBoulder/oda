@@ -23,7 +23,7 @@ function oda_page_attachments(array &$attachments): void {
     if ($node->getType() == 'data_report') {
       $attachments['#attached']['library'][] = 'oda/node_page';
     }
-    if ($node->id() == 31531) {
+    if ($node->id() == 32349) {
       $attachments['#attached']['library'][] = 'oda/oda_front';
     }
   }
