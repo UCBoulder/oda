@@ -1,5 +1,3 @@
-console.log('ODA Frontend Script Loaded');
-
 (function () {
   'use strict';
 
@@ -65,5 +63,14 @@ console.log('ODA Frontend Script Loaded');
         });
       }
     });
+
+    // Select '.oda-lock' elements and add "title='Login required'" if not present
+    const lockElements = document.querySelectorAll('.oda-lock');
+    lockElements.forEach(function (lockElement) {
+      if (!lockElement.hasAttribute('title')) {
+        lockElement.setAttribute('title', 'Login required');
+      }
+    });
+
   });
 })();
