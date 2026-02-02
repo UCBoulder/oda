@@ -71,7 +71,8 @@ class DataFavorites extends ProcessorPluginBase {
       $definition = [
         'label' => $this->t('Custom Favorite data reports'),
         'description' => $this->t('Data reports favorites.'),
-        'type' => 'string',
+        'type' => 'integer',
+        'is_list' => TRUE,
         'processor_id' => $this->getPluginId(),
       ];
       $properties['search_api_custom_data_report_fav'] = new ProcessorProperty($definition);
