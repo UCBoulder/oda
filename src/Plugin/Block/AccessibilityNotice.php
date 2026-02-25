@@ -104,9 +104,7 @@ class AccessibilityNotice extends BlockBase implements
     $type = $node ? $node->get('field_oda_type')->getValue()[0]['target_id'] : NULL;
 
     if ($type == 1129) {
-      $render_query = $this->blockUuidQuery;
-      $render_query->getBidByUuid('1a9a7a82-bd59-4078-90d4-2b410959fac5');
-      $render = $render_query->loadBlock();
+      $render = $this->blockUuidQuery->getBlockRenderByUuid('1a9a7a82-bd59-4078-90d4-2b410959fac5');
     }
     else {
       $render = '';
