@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Hero Image for oda news")
  * )
  */
-class OdaHeroImage extends BlockBase implements
+final class OdaHeroImage extends BlockBase implements
   ContainerFactoryPluginInterface {
 
   /**
@@ -49,7 +49,7 @@ class OdaHeroImage extends BlockBase implements
    *
    * @return static
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
       $configuration,
       $plugin_id,

@@ -23,7 +23,7 @@ use Drupal\flag\FlagServiceInterface;
  *   hidden = true,
  * )
  */
-class DataFavorites extends ProcessorPluginBase {
+final class DataFavorites extends ProcessorPluginBase {
 
   /**
    * The flag service.
@@ -52,7 +52,7 @@ class DataFavorites extends ProcessorPluginBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
       $configuration,
       $plugin_id,

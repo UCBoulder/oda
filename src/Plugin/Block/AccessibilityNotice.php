@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("ODA Accessibility Notice Block")
  * )
  */
-class AccessibilityNotice extends BlockBase implements
+final class AccessibilityNotice extends BlockBase implements
   ContainerFactoryPluginInterface {
 
   /**
@@ -55,7 +55,7 @@ class AccessibilityNotice extends BlockBase implements
    *
    * @return static
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
       $configuration,
       $plugin_id,
@@ -104,7 +104,8 @@ class AccessibilityNotice extends BlockBase implements
     $type = $node ? $node->get('field_oda_type')->getValue()[0]['target_id'] : NULL;
 
     if ($type == 1129) {
-      $render = $this->blockUuidQuery->getBlockRenderByUuid('1a9a7a82-bd59-4078-90d4-2b410959fac5');
+      $this->blockUuidQuery->getBidByUuid('1a9a7a82-bd59-4078-90d4-2b410959fac5');
+      $render = $this->blockUuidQuery->loadBlock();
     }
     else {
       $render = '';

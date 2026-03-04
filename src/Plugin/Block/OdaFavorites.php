@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("ODA Favorites"),
  * )
  */
-class OdaFavorites extends BlockBase implements
+final class OdaFavorites extends BlockBase implements
   ContainerFactoryPluginInterface {
 
   /**
@@ -40,7 +40,7 @@ class OdaFavorites extends BlockBase implements
    *
    * @return static
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
       $configuration,
       $plugin_id,
@@ -84,12 +84,7 @@ class OdaFavorites extends BlockBase implements
    * Set cache tag by user.
    */
   public function getCacheTags() {
-    if ($user = $this->currentUser) {
-      return Cache::mergeTags(parent::getCacheTags(), ['user:' . $user->id()]);
-    }
-    else {
-      return parent::getCacheTags();
-    }
+    return Cache::mergeTags(parent::getCacheTags(), ['user:' . $this->currentUser->id()]);
 
   }
 
