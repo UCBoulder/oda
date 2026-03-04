@@ -10,7 +10,7 @@ use Drupal\taxonomy\Entity\Term;
 /**
  * Setup some inital terms.
  */
-function oda_update_10001() {
+function oda_update_10001(): void {
   $pop_terms = [
     "undergraduates",
     "graduate students",
@@ -165,7 +165,7 @@ function oda_update_10001() {
 /**
  * Create new data pages.
  */
-function oda_update_10003() {
+function oda_update_10003(): void {
   $titles = [
     'Welcome to data and analytics',
     'About',
@@ -195,7 +195,7 @@ function oda_update_10003() {
 /**
  * Add oda permission terms to TAC Control..
  */
-function oda_update_10004() {
+function oda_update_10004(): void {
   $tac_terms = [
     'OIT-ODA-provost-chancellor',
     'OIT-ODA-dean',
@@ -228,7 +228,7 @@ function oda_update_10004() {
 /**
  * Add oda permission terms to TAC Control..
  */
-function oda_update_10005() {
+function oda_update_10005(): void {
   $tac_terms = [
     'DA-DataAndAnalyticsTeam',
   ];

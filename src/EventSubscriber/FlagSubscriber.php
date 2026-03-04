@@ -19,7 +19,7 @@ class FlagSubscriber implements EventSubscriberInterface {
    * - Set state for flagging CI Links so email notifications can be send daily.
    * - Invalidate CI Link cache on flagging.
    */
-  public function onFlag(FlaggingEvent $event) {
+  public function onFlag(FlaggingEvent $event): void {
     $flagging = $event->getFlagging();
     $flag_id = $flagging->getFlagId();
     if ($flag_id == 'oda_reports') {
@@ -35,7 +35,7 @@ class FlagSubscriber implements EventSubscriberInterface {
    * - Set state for unflagging CI Links so notifications can be sent daily.
    * - Invalidate CI Link cache on flagging.
    */
-  public function onUnflag(UnflaggingEvent $event) {
+  public function onUnflag(UnflaggingEvent $event): void {
     $flagging = $event->getFlaggings();
     $flagging = reset($flagging);
     $flag_id = $flagging->getFlagId();

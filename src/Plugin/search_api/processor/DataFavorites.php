@@ -35,7 +35,7 @@ final class DataFavorites extends ProcessorPluginBase {
   /**
    * Constructs a DataFavorites object.
    *
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin ID for the plugin instance.
@@ -51,6 +51,8 @@ final class DataFavorites extends ProcessorPluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<string, mixed> $configuration
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
@@ -82,8 +84,10 @@ final class DataFavorites extends ProcessorPluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param \Drupal\search_api\Item\ItemInterface<string, \Drupal\search_api\Item\FieldInterface> $item
    */
-  public function addFieldValues(ItemInterface $item) {
+  public function addFieldValues(ItemInterface $item): void {
     $entity = $item->getOriginalObject()->getValue();
 
     $flag = $this->flagService->getFlaggingUsers($entity);

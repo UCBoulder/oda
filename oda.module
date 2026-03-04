@@ -14,8 +14,10 @@ use Drupal\Core\Link;
 /**
  * Implements hook_page_attachments() to add library oda.node_page to
  * data_report node type..
+ *
+ * @param array<string, mixed> $attachments
  */
-function oda_page_attachments(array &$attachments) {
+function oda_page_attachments(array &$attachments): void {
   $node = \Drupal::routeMatch()->getParameter('node');
   if ($node instanceof \Drupal\node\NodeInterface) {
     if ($node->getType() == 'data_report') {
@@ -26,8 +28,10 @@ function oda_page_attachments(array &$attachments) {
 
 /**
  * Implements hook_form_alter().
+ *
+ * @param array<string, mixed> $form
  */
-function oda_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+function oda_form_views_exposed_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
   /** @var \Drupal\views\ViewExecutable $view */
   $view = $form_state->get('view');
   if ($view->id() == 'oda_data' && $view->current_display == 'page_1') {
@@ -37,8 +41,10 @@ function oda_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateIn
 
 /**
  * Implements hook_page_attachments_alter().
+ *
+ * @param array<string, mixed> $attachments
  */
-function oda_page_attachments_alter(array &$attachments) {
+function oda_page_attachments_alter(array &$attachments): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
   if ($domain == 'oda') {
     $google_site_verify = [
@@ -55,7 +61,7 @@ function oda_page_attachments_alter(array &$attachments) {
 /**
  * Implements hook_views_pre_render().
  */
-function oda_views_pre_view(ViewExecutable $view) {
+function oda_views_pre_view(ViewExecutable $view): void {
   if ($view->id() == 'oda_data') {
     // Get current users roles.
     $current_user = \Drupal::currentUser();
@@ -107,7 +113,7 @@ function oda_views_pre_view(ViewExecutable $view) {
 /**
  * Implements hook_views_pre_render().
  */
-function oda_views_pre_render(ViewExecutable $view) {
+function oda_views_pre_render(ViewExecutable $view): void {
   if ($view->id() == 'oda_data') {
     $view->element['#attached']['library'][] = 'oda/data_report_layout';
   }
@@ -115,8 +121,10 @@ function oda_views_pre_render(ViewExecutable $view) {
 
 /**
  * Implements hook_form_alter().
+ *
+ * @param array<string, mixed> $form
  */
-function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function oda_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
   if ($domain == 'oda') {
     oit_set_domain_defaults($form, 'oda', 'oda_colorado_edu');
@@ -271,15 +279,17 @@ function oda_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
 /**
  * Set domain on content to match site domain
+ *
+ * @param array<string, mixed> $form
  */
-function _oda_set_oda_domain(&$form, FormStateInterface $form_state) {
+function _oda_set_oda_domain(array &$form, FormStateInterface $form_state): void {
   _oit_set_domain_submit($form, $form_state, 'oda', 'oda_colorado_edu');
 }
 
 /**
  * Create term edit links.
  */
-function oda_term_edit($term_id, $edit_label = 'Add/Delete Terms') {
+function oda_term_edit(string $term_id, string $edit_label = 'Add/Delete Terms'): string {
   $url = Url::fromUri("internal:/admin/structure/taxonomy/manage/$term_id/overview");
   $link = Link::fromTextAndUrl(t($edit_label), $url);
 
@@ -289,7 +299,7 @@ function oda_term_edit($term_id, $edit_label = 'Add/Delete Terms') {
 /**
  * Implements hook_shortcut_default_set().
  */
-function oda_shortcut_default_set() {
+function oda_shortcut_default_set(): ?string {
   $current_user = \Drupal::currentUser();
   $roles = $current_user->getRoles();
 
@@ -300,5 +310,6 @@ function oda_shortcut_default_set() {
   if (in_array('oda_super_editors', $roles)) {
       return 'oda-super-editor';
   }
+  return NULL;
 }
 

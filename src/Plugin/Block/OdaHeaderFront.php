@@ -16,8 +16,10 @@ class OdaHeaderFront extends BlockBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
-  public function build() {
+  public function build(): array {
     $block['string'] = [
       '#type' => 'inline_template',
       '#template' => '<div class="site-name-wrapper">

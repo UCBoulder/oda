@@ -31,7 +31,7 @@ final class OdaFavorites extends BlockBase implements
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   Container pulled in.
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration added.
    * @param string $plugin_id
    *   Plugin_id added.
@@ -52,7 +52,7 @@ final class OdaFavorites extends BlockBase implements
   /**
    * {@inheritdoc}
    *
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration array.
    * @param string $plugin_id
    *   Plugin id string.
@@ -68,8 +68,10 @@ final class OdaFavorites extends BlockBase implements
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
-  public function build() {
+  public function build(): array {
     $uid = $this->currentUser->id();
 
     // Create link '/reports?f%5B0%5D=oda_favorite_data_reports%3A' . $uid.
