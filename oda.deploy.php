@@ -8,7 +8,7 @@
 /**
  * Add role name to oda_access_control terms.
  */
-function oda_deploy_10000_accesscontrol() {
+function oda_deploy_10000_accesscontrol(): void {
   $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('oda_access_control');
   $oda_access_terms = [];
   foreach ($terms as $term) {

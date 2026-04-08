@@ -17,6 +17,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "oda_hero_image",
  *   admin_label = @Translation("Hero Image for oda news")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class OdaHeroImage extends BlockBase implements
   ContainerFactoryPluginInterface {
@@ -40,7 +42,7 @@ class OdaHeroImage extends BlockBase implements
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   Container pulled in.
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration added.
    * @param string $plugin_id
    *   Plugin_id added.
@@ -49,8 +51,8 @@ class OdaHeroImage extends BlockBase implements
    *
    * @return static
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    return new self(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -62,7 +64,7 @@ class OdaHeroImage extends BlockBase implements
   /**
    * {@inheritdoc}
    *
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration array.
    * @param string $plugin_id
    *   Plugin id string.
@@ -81,6 +83,8 @@ class OdaHeroImage extends BlockBase implements
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
   public function build() {
     $thisNode = $this->routMatchInterface->getParameter('node');

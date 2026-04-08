@@ -16,6 +16,8 @@ class OdaHeader extends BlockBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
   public function build() {
     // Check if front page.

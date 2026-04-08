@@ -22,6 +22,8 @@ use Drupal\flag\FlagServiceInterface;
  *   locked = true,
  *   hidden = true,
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class DataFavorites extends ProcessorPluginBase {
 
@@ -35,7 +37,7 @@ class DataFavorites extends ProcessorPluginBase {
   /**
    * Constructs a DataFavorites object.
    *
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin ID for the plugin instance.
@@ -51,9 +53,12 @@ class DataFavorites extends ProcessorPluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<string, mixed> $configuration
+   *   Configuration array.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    return new self(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -83,8 +88,10 @@ class DataFavorites extends ProcessorPluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-ignore missingType.iterableValue
    */
-  public function addFieldValues(ItemInterface $item) {
+  public function addFieldValues(ItemInterface $item): void {
     $entity = $item->getOriginalObject()->getValue();
 
     $flag = $this->flagService->getFlaggingUsers($entity);

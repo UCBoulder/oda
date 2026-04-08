@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "oda_favorites",
  *   admin_label = @Translation("ODA Favorites"),
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class OdaFavorites extends BlockBase implements
   ContainerFactoryPluginInterface {
@@ -31,7 +33,7 @@ class OdaFavorites extends BlockBase implements
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   Container pulled in.
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration added.
    * @param string $plugin_id
    *   Plugin_id added.
@@ -40,8 +42,8 @@ class OdaFavorites extends BlockBase implements
    *
    * @return static
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    return new self(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -52,7 +54,7 @@ class OdaFavorites extends BlockBase implements
   /**
    * {@inheritdoc}
    *
-   * @param array $configuration
+   * @param array<string, mixed> $configuration
    *   Configuration array.
    * @param string $plugin_id
    *   Plugin id string.
@@ -68,6 +70,8 @@ class OdaFavorites extends BlockBase implements
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
   public function build() {
     $uid = $this->currentUser->id();
@@ -84,13 +88,7 @@ class OdaFavorites extends BlockBase implements
    * Set cache tag by user.
    */
   public function getCacheTags() {
-    if ($user = $this->currentUser) {
-      return Cache::mergeTags(parent::getCacheTags(), ['user:' . $user->id()]);
-    }
-    else {
-      return parent::getCacheTags();
-    }
-
+    return Cache::mergeTags(parent::getCacheTags(), ['user:' . $this->currentUser->id()]);
   }
 
   /**

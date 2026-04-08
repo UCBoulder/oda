@@ -16,6 +16,8 @@ class OdaHeaderFront extends BlockBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string, mixed>
    */
   public function build() {
     $block['string'] = [
