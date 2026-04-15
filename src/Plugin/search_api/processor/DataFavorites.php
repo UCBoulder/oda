@@ -52,7 +52,14 @@ final class DataFavorites extends ProcessorPluginBase {
   /**
    * {@inheritdoc}
    *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
    * @param array<string, mixed> $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new self(
@@ -87,6 +94,7 @@ final class DataFavorites extends ProcessorPluginBase {
    * {@inheritdoc}
    *
    * @param \Drupal\search_api\Item\ItemInterface<string, \Drupal\search_api\Item\FieldInterface> $item
+   *   The item whose field values should be added.
    */
   public function addFieldValues(ItemInterface $item): void {
     $entity = $item->getOriginalObject()->getValue();

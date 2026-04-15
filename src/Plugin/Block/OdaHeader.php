@@ -18,6 +18,7 @@ class OdaHeader extends BlockBase {
    * {@inheritdoc}
    *
    * @return array<string, mixed>
+   *   A renderable array representing the block content.
    */
   public function build(): array {
     $block['string'] = [

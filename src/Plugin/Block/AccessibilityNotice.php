@@ -100,6 +100,7 @@ final class AccessibilityNotice extends BlockBase implements
    * {@inheritdoc}
    *
    * @return array<string, mixed>
+   *   A renderable array representing the block content.
    */
   public function build(): array {
     $node = $this->routeMatch->getParameter('node');
