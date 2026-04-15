@@ -24,8 +24,11 @@ class FlagSubscriber implements EventSubscriberInterface {
     $flag_id = $flagging->getFlagId();
     if ($flag_id == 'oda_reports') {
       $indexes = Index::loadMultiple();
-      $datasource_id = 'oda_data';
-      $indexes[$datasource_id]->reindex();
+      $index = $indexes['oda_data'];
+      $entity = $flagging->getFlaggable();
+      $entity_id = $flagging->getFlaggableId();
+      $langcode = $entity->language()->getId();
+      $index->trackItemsUpdated('entity:node', [$entity_id . ':' . $langcode]);
     }
   }
 
@@ -41,8 +44,11 @@ class FlagSubscriber implements EventSubscriberInterface {
     $flag_id = $flagging->getFlagId();
     if ($flag_id == 'oda_reports') {
       $indexes = Index::loadMultiple();
-      $datasource_id = 'oda_data';
-      $indexes[$datasource_id]->reindex();
+      $index = $indexes['oda_data'];
+      $entity = $flagging->getFlaggable();
+      $entity_id = $flagging->getFlaggableId();
+      $langcode = $entity->language()->getId();
+      $index->trackItemsUpdated('entity:node', [$entity_id . ':' . $langcode]);
     }
   }
 
