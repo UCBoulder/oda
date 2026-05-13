@@ -141,26 +141,20 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
       $form['type']['#options'] = $options;
     }
   }
+
+  if ($form['#id'] == 'views-exposed-form-moderated-content-moderated-content') {
+    if ($domain == 'oda') {
+      $form['#attached']['library'][] = 'oda/admin_content';
+      _oit_form_set_domain('content/moderated', 'oda_colorado_edu');
+    }
+  }
+
   // Add custom library to admin content page and set domain.
   if ($form_id == "views_form_content_page_1") {
     $domain = \Drupal::service('oit.domain')->getDomain();
     if ($domain == 'oda') {
       $form['#attached']['library'][] = 'oda/admin_content';
-      // Get query string.
-      $query = \Drupal::request()->query->all();
-      $domain_set = FALSE;
-      foreach ($query as $key => $value) {
-        if ($key == 'field_domain_access_target_id') {
-          $domain_set = TRUE;
-        }
-      }
-      if (!$domain_set) {
-        // Redirect to query string "field_domain_access_target_id=oit_colorado_edu".
-        $query['field_domain_access_target_id'] = 'oda_colorado_edu';
-        $query = http_build_query($query);
-        $response = new RedirectResponse('/admin/content?' . $query);
-        $response->send();
-      }
+      _oit_form_set_domain('content', 'oda_colorado_edu');
     }
   }
 
