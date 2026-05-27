@@ -1,10 +1,10 @@
 <?php
 
 /**
-* @file
-*/
+ * @file
+ * Install, update, and uninstall functions for the ODA module.
+ */
 
-use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -183,7 +183,7 @@ function oda_update_10003(): void {
         'format' => 'oda_rich_text',
       ],
       'field_domain_access' => [
-        0 => 'oda_colorado_edu'
+        0 => 'oda_colorado_edu',
       ],
       'uid' => '26',
       'status' => '1',
@@ -193,7 +193,7 @@ function oda_update_10003(): void {
 }
 
 /**
- * Add oda permission terms to TAC Control..
+ * Add oda permission terms to TAC Control.
  */
 function oda_update_10004(): void {
   $tac_terms = [
@@ -226,7 +226,7 @@ function oda_update_10004(): void {
 }
 
 /**
- * Add oda permission terms to TAC Control..
+ * Add oda permission terms to TAC Control.
  */
 function oda_update_10005(): void {
   $tac_terms = [

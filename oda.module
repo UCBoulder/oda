@@ -5,21 +5,18 @@
  * Module containing custom oda code.
  */
 
+use Drupal\node\NodeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Url;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Link;
 
 /**
- * Implements hook_page_attachments() to add library oda.node_page to
- * data_report node type..
- *
- * @param array<string, mixed> $attachments
+ * Implements hook_page_attachments().
  */
 function oda_page_attachments(array &$attachments): void {
   $node = \Drupal::routeMatch()->getParameter('node');
-  if ($node instanceof \Drupal\node\NodeInterface) {
+  if ($node instanceof NodeInterface) {
     if ($node->getType() == 'data_report') {
       $attachments['#attached']['library'][] = 'oda/node_page';
     }
@@ -30,11 +27,9 @@ function oda_page_attachments(array &$attachments): void {
 }
 
 /**
- * Implements hook_form_alter().
- *
- * @param array<string, mixed> $form
+ * Implements hook_form_FORM_ID_alter().
  */
-function oda_form_views_exposed_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+function oda_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state): void {
   /** @var \Drupal\views\ViewExecutable $view */
   $view = $form_state->get('view');
   if ($view->id() == 'oda_data' && $view->current_display == 'page_1') {
@@ -44,8 +39,6 @@ function oda_form_views_exposed_form_alter(array &$form, \Drupal\Core\Form\FormS
 
 /**
  * Implements hook_page_attachments_alter().
- *
- * @param array<string, mixed> $attachments
  */
 function oda_page_attachments_alter(array &$attachments): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
@@ -92,7 +85,8 @@ function oda_views_pre_view(ViewExecutable $view): void {
         $term_role = $term_role_part->rid;
         $term_tid = $term_role_part->tid;
 
-        // If term role is 'administrator', 'authenticated', 'pseudo_admin', or 'anonymous' then continue.
+        // If term role is 'administrator', 'authenticated', 'pseudo_admin',
+        // or 'anonymous' then continue.
         if ($term_role == 'administrator' || $term_role == 'anonymous' || $term_role == 'authenticated' || $term_role == 'pseudo_admin'|| $term_role == 'oda_super_editors') {
           continue;
         }
@@ -124,8 +118,6 @@ function oda_views_pre_render(ViewExecutable $view): void {
 
 /**
  * Implements hook_form_alter().
- *
- * @param array<string, mixed> $form
  */
 function oda_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
@@ -213,8 +205,7 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
     $form['field_oda_financial']['#group'] = 'oda_terms';
     $form['field_oda_surveys']['#group'] = 'oda_terms';
 
-
-    // if current user is 'oda_super_editors' or 'administrator'.
+    // If current user is 'oda_super_editors' or 'administrator'.
     $current_user = \Drupal::currentUser();
     $roles = $current_user->getRoles();
     if (in_array('oda_super_editors', $roles) || in_array('administrator', $roles)) {
@@ -275,9 +266,12 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
 }
 
 /**
- * Set domain on content to match site domain
+ * Set domain on content to match site domain.
  *
  * @param array<string, mixed> $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
  */
 function _oda_set_oda_domain(array &$form, FormStateInterface $form_state): void {
   _oit_set_domain_submit($form, $form_state, 'oda', 'oda_colorado_edu');
@@ -286,9 +280,9 @@ function _oda_set_oda_domain(array &$form, FormStateInterface $form_state): void
 /**
  * Create term edit links.
  */
-function oda_term_edit(string $term_id, string $edit_label = 'Add/Delete Terms'): string {
+function oda_term_edit(string $term_id): string {
   $url = Url::fromUri("internal:/admin/structure/taxonomy/manage/$term_id/overview");
-  $link = Link::fromTextAndUrl(t($edit_label), $url);
+  $link = Link::fromTextAndUrl(t('Add/Delete Terms'), $url);
 
   return $link->toString()->getGeneratedLink();
 }
@@ -300,13 +294,12 @@ function oda_shortcut_default_set(): ?string {
   $current_user = \Drupal::currentUser();
   $roles = $current_user->getRoles();
 
-  // if roles array contains 'oda_editors' or 'oda_super_editors'.
+  // If roles array contains 'oda_editors' or 'oda_super_editors'.
   if (in_array('oda_editors', $roles)) {
-      return 'oda';
+    return 'oda';
   }
   if (in_array('oda_super_editors', $roles)) {
-      return 'oda-super-editor';
+    return 'oda-super-editor';
   }
   return NULL;
 }
-
