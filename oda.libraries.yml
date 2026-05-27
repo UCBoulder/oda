@@ -14,3 +14,6 @@ oit_data_report_page_form:
 data_report_layout:
   js:
     js/data_report_layout.js: {}
+oda_front:
+  js:
+    js/oda_front.js: {}
