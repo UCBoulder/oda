@@ -14,8 +14,7 @@ use Drupal\Core\Link;
 /**
  * Implements hook_page_attachments().
  *
- * @param array<string, mixed> $attachments
- *   The attachments array.
+ * @phpstan-param array<string, mixed> $attachments
  */
 function oda_page_attachments(array &$attachments): void {
   $node = \Drupal::routeMatch()->getParameter('node');
@@ -32,8 +31,7 @@ function oda_page_attachments(array &$attachments): void {
 /**
  * Implements hook_form_FORM_ID_alter().
  *
- * @param array<string, mixed> $form
- *   The form array.
+ * @phpstan-param array<string, mixed> $form
  */
 function oda_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state): void {
   /** @var \Drupal\views\ViewExecutable $view */
@@ -46,8 +44,7 @@ function oda_form_views_exposed_form_alter(array &$form, FormStateInterface $for
 /**
  * Implements hook_page_attachments_alter().
  *
- * @param array<string, mixed> $attachments
- *   The attachments array.
+ * @phpstan-param array<string, mixed> $attachments
  */
 function oda_page_attachments_alter(array &$attachments): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
@@ -128,8 +125,7 @@ function oda_views_pre_render(ViewExecutable $view): void {
 /**
  * Implements hook_form_alter().
  *
- * @param array<string, mixed> $form
- *   The form array.
+ * @phpstan-param array<string, mixed> $form
  */
 function oda_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   $domain = \Drupal::service('oit.domain')->getDomain();
