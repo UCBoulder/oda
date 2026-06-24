@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
 use Drupal\oit\Plugin\BlockUuidQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -104,7 +105,10 @@ final class AccessibilityNotice extends BlockBase implements
    */
   public function build(): array {
     $node = $this->routeMatch->getParameter('node');
-    $type = $node ? $node->get('field_oda_type')->getValue()[0]['target_id'] : NULL;
+    $type = NULL;
+    if ($node instanceof NodeInterface && $node->hasField('field_oda_type') && !$node->get('field_oda_type')->isEmpty()) {
+      $type = $node->get('field_oda_type')->getValue()[0]['target_id'];
+    }
 
     if ($type == 1129) {
       $this->blockUuidQuery->getBidByUuid('1a9a7a82-bd59-4078-90d4-2b410959fac5');
