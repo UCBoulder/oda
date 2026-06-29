@@ -239,6 +239,17 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
 
   // Set defaults on data page nodes for ODA type.
   if ($form_id == "node_oda_page_form" || $form_id == "node_oda_page_edit_form") {
+
+    // Group for access report TAC.
+    $form['oda_access_group'] = [
+      '#title' => t('Data Report Access Group'),
+      '#type' => 'details',
+      '#group' => 'advanced',
+      '#open' => 1,
+      '#weight' => 99,
+    ];
+    $form['field_oda_report_access']['#group'] = 'oda_access_group';
+
     $advanced = [
       '#type' => 'inline_template',
       '#template' => '<details>
