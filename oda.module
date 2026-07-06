@@ -185,13 +185,7 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
     $form['#attached']['library'][] = 'webform/webform.element.select2';
     $form['#attached']['library'][] = 'oda/oit_data_report_page_form';
     // Group for access report TAC.
-    $form['oda_access_group'] = [
-      '#title' => t('Data Report Access Group'),
-      '#type' => 'details',
-      '#group' => 'advanced',
-      '#open' => 1,
-      '#weight' => 99,
-    ];
+    $form['oda_access_group'] = _oda_access_group_details();
     $form['field_oda_report_access']['#group'] = 'oda_access_group';
     // Group for page sub-type extra fields.
     $form['oda_terms'] = [
@@ -241,13 +235,7 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
   if ($form_id == "node_oda_page_form" || $form_id == "node_oda_page_edit_form") {
 
     // Group for access report TAC.
-    $form['oda_access_group'] = [
-      '#title' => t('Data Report Access Group'),
-      '#type' => 'details',
-      '#group' => 'advanced',
-      '#open' => 1,
-      '#weight' => 99,
-    ];
+    $form['oda_access_group'] = _oda_access_group_details();
     $form['field_oda_report_access']['#group'] = 'oda_access_group';
 
     $advanced = [
@@ -282,6 +270,22 @@ function oda_form_alter(array &$form, FormStateInterface $form_state, string $fo
     $form['oit_advanced'] = $advanced;
   }
 
+}
+
+/**
+ * Build shared form details for ODA access group.
+ *
+ * @return array<string, mixed>
+ *   Access group details render array.
+ */
+function _oda_access_group_details(): array {
+  return [
+    '#title' => t('Data Report Access Group'),
+    '#type' => 'details',
+    '#group' => 'advanced',
+    '#open' => 1,
+    '#weight' => 99,
+  ];
 }
 
 /**
