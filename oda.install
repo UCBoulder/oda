@@ -263,3 +263,26 @@ function oda_update_10005(): void {
     }
   }
 }
+
+/**
+ * Set default report access (DA-public, tid 1229) on oda_page nodes.
+ */
+function oda_update_10006(): void {
+  $default_tid = 1229;
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  $nids = $node_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('type', 'oda_page')
+    ->notExists('field_oda_report_access')
+    ->execute();
+
+  foreach ($nids as $nid) {
+    $node = $node_storage->load($nid);
+    if ($node && $node->get('field_oda_report_access')->isEmpty()) {
+      $node->set('field_oda_report_access', ['target_id' => $default_tid]);
+      $node->save();
+    }
+  }
+}
