@@ -3,5 +3,6 @@ type: module
 description: 'Customizations for Data & Analytics domain of site.'
 dependencies:
   - drupal:block
+  - oit:oit
 
 core_version_requirement: ^10 || ^11
