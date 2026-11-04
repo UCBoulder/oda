@@ -3,8 +3,13 @@
 
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', function () {
+    // Scope to the front page menu block so other markup with the same
+    // structure (e.g. the core Navigation sidebar popovers) is left alone.
+    const menuSelector = '#block-156 ul > li > button';
+    const menuListSelector = '#block-156 ul > li > ul';
+
     // Get all buttons that have nested ul elements
-    const menuButtons = document.querySelectorAll('ul > li > button');
+    const menuButtons = document.querySelectorAll(menuSelector);
 
     menuButtons.forEach(function (button) {
       const listItem = button.parentElement;
@@ -50,7 +55,7 @@
     // Close all menus when clicking anywhere else on the page
     document.addEventListener('click', function (e) {
       // Check if the click was outside all menu buttons and nested lists
-      const clickedInsideMenu = e.target.closest('ul > li > button') || e.target.closest('ul > li > ul');
+      const clickedInsideMenu = e.target.closest(menuSelector) || e.target.closest(menuListSelector);
 
       if (!clickedInsideMenu) {
         menuButtons.forEach(function (button) {
